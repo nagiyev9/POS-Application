@@ -1,0 +1,134 @@
+import { useEffect, useState } from "react";
+import Header from "../components/header/Header.jsx";
+import StatisticCard from "../components/statistics/StatisticCard.jsx";
+import { Area, Pie } from "@ant-design/plots";
+import { Spin } from "antd";
+
+const StatisticPage = () => {
+  const [data, setData] = useState();
+  const [products, setProducts] = useState([]);
+  const user = JSON.parse(localStorage.getItem("popUser"));
+
+  useEffect(() => {
+    asyncFetch();
+  }, []);
+
+  const getProducts = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/product/get-all");
+      const data = await res.json();
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const asyncFetch = () => {
+    fetch("http://localhost:5000/api/invoice/get-all")
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => {
+        console.log("fetch data failed", error);
+      });
+  };
+
+  const config = {
+    data,
+    xField: "costumerName",
+    yField: "subTotal",
+    xAxis: {
+      range: [0, 1],
+    },
+    height: 340,
+  };
+
+  const config2 = {
+    appendPadding: 10,
+    data,
+    angleField: "subTotal",
+    colorField: "costumerName",
+    radius: 1,
+    innerRadius: 0.6,
+    label: {
+      offset: "-50%",
+      content: "{value}",
+      style: {
+        textAlign: "center",
+        fontSize: 14,
+        fill: "#fff",
+      },
+    },
+    height: 340,
+    interactions: [{ type: "element-selected" }, { type: "element-active" }],
+    statistic: {
+      title: false,
+      content: {
+        style: {
+          whiteSpace: "pre-wrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        },
+        content: "Total\nEarnings",
+      },
+    },
+  };
+
+  const totalAmount = () => {
+    const amount = data.reduce((total, item) => item.totalAmount + total, 0);
+    return `${amount.toFixed(2)}$`;
+  };
+
+  return (
+    <>
+      <Header />
+      <h1 className="text-4xl font-bold text-center mb-4">My Statistics</h1>
+      {data && products ? (
+        <div className="px-6 md:pb-0 pb-20 statistic-div">
+          <div className="statistic-section">
+            <h2 className="text-lg font-bold">
+              Welcome <span className="text-green-600">{user?.username}</span>
+            </h2>
+            <div className="statistic-cards grid xl:grid-cols-4 md:grid-cols-2 my-10 md:gap-10 gap-4">
+              <StatisticCard
+                title={"Total Customers"}
+                amount={data?.length}
+                img={"images/user.png"}
+              />
+              <StatisticCard
+                title={"Total Earnings"}
+                amount={totalAmount()}
+                img={"images/money.png"}
+              />
+              <StatisticCard
+                title={"Total Sales"}
+                amount={data?.length}
+                img={"images/sale.png"}
+              />
+              <StatisticCard
+                title={"Total Products"}
+                amount={products?.length}
+                img={"images/product.png"}
+              />
+            </div>
+            <div className="flex justify-between gap-10 lg:flex-row flex-col items-center">
+              {/* <div className="lg:w-1/2 lg:h-72 w-full h-72 area">
+                <Area {...config} className={"items-center"} />
+              </div> */}
+              {/* <div className="lg:w-1/2 lg:h-full w-full area">
+              <Pie {...config2} className={"items-center"} />
+            </div> */}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Spin size="large" className="absolute top-1/2 left-1/2" />
+      )}
+    </>
+  );
+};
+
+export default StatisticPage;
