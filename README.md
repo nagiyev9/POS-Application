@@ -1,7 +1,5 @@
 *POS Application*
 
-English
-
 Overview
 
 The POS (Point of Sale) Application is a web-based platform designed to manage various business operations, such as product and category management, customer invoicing, statistics tracking, and more. The application features an admin panel for managing products and categories, a live search function, and a fake payment method for simulating transactions. The application is built with a RESTful API using Node.js and Express.js on the backend, and React with Redux on the frontend.
