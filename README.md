@@ -57,6 +57,7 @@ The POS (Point of Sale) Application is a web-based platform designed to manage v
             "react-to-print": "^2.15.1",
             "web-vitals": "^2.1.4"
           }
+    
   - Dependencies For Backend:
     
           {
