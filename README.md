@@ -104,6 +104,7 @@ The POS (Point of Sale) Application is a web-based platform designed to manage v
 
         The application should now be running on http://localhost:3000 for the frontend and http://localhost:5000 for the backend.
 
+        This project is licensed under the MIT License. See the LICENSE file for details.
 
 
 ![image](https://github.com/user-attachments/assets/309613fb-d602-42d8-9b3d-8c251da724b5)
