@@ -117,17 +117,17 @@ const LoginPage = () => {
                   />
                   <AuthCarousel
                     img="/images/statistic.svg"
-                    title="İstatistikler"
+                    title="Statistics"
                     desc="Widely Held Statistics"
                   />
                   <AuthCarousel
                     img="/images/customer.svg"
-                    title="Müşteri Memnuniyeti"
+                    title="Customer Satisfaction"
                     desc="Customers Satisfied with the Product at the End of the Experience"
                   />
                   <AuthCarousel
                     img="/images/admin.svg"
-                    title="Yönetici Paneli"
+                    title="Admin Panel"
                     desc="Management from a Single Place"
                   />
                 </Carousel>
